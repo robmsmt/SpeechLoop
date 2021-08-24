@@ -1,7 +1,7 @@
 # SpeechLoop
 [![pre-commit](https://img.shields.io/badge/pre--commit-enabled-brightgreen?logo=pre-commit&logoColor=white)](https://github.com/pre-commit/pre-commit)
-[![GitHub license](https://img.shields.io/github/license/robmsmt/SpeechLoop)](https://github.com/robmsmt/SpeechLoop)
-[![Documentation Status](https://readthedocs.org/projects/robmsmt-demo/badge/?version=latest)](https://robmsmt-demo.readthedocs.io/en/latest/?badge=latest)
+![GitHub](https://img.shields.io/github/license/robmsmt/SpeechLoop)
+[![Documentation Status](https://readthedocs.org/projects/speechloop/badge/?version=latest)](https://speechloop.readthedocs.io/en/latest/?badge=latest)
 ___
  >One can judge from experiment, or one can blindly accept authority.
 
