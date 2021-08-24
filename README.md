@@ -43,15 +43,12 @@ speechloop
 
 Want to use a specific ASR?
 ```python
-from speechloop.asr import Vosk, Sphinx, Coqui
+from speechloop.asr import Vosk
 
 raw_audio_file = open("path/to/your/mono_16k.wav", "rb").read()
 
 vs = Vosk()
 print(f"{vs.longname} -> {vs.execute_with_audio(raw_audio_file)}")
-
-sp = Sphinx()
-cq = Coqui()
 ```
 
 ### ASRs
@@ -97,9 +94,9 @@ The structure loosely follows the ![cookiecutter-data-science](http://drivendata
 
 ## Developer - 2 Step Install
 
-For developers - installation should be straight forward and only take a number of minutes on most systems.
+For developers - installation should be straight-forward and only take a number of minutes on most systems.
 
-### Step 1 - Install SpeechLoop
+### Step 1 - Dev Install SpeechLoop
 ```bash
 git clone https://github.com/robmsmt/SpeechLoop && cd SpeechLoop
 python3 -m venv venv/py3
