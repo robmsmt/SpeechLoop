@@ -1,0 +1,31 @@
+[tool.black]
+line-length = 180  # fu small screens
+target-version = ['py38']
+include = '\.pyi?$'
+exclude = '''
+
+(
+  /(
+      \.eggs         # exclude a few common directories in the
+    | \.git          # root of the project
+    | \.hg
+    | \.mypy_cache
+    | \.tox
+    | \venv
+    | _build
+    | build
+    | dist
+  )/
+)
+'''
+# #attempted to use yapf - it looked okay except argparse kept getting chopped up - prefered concise of long-line black formatting
+#[tool.yapf]
+#based_on_style = "google"
+#spaces_before_comment = 4
+#split_before_logical_operator = false
+
+[build-system]
+requires = [
+    "setuptools>=42",
+    "wheel"
+]

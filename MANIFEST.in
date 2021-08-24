@@ -1,0 +1,8 @@
+include AUTHORS
+include CONTRIBUTING.md
+include COPYING
+include README.md
+recursive-include docs *
+recursive-include speechloop *.py
+recursive-include speechloop/data *
+recursive-exclude speechloop/models *
