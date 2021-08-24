@@ -95,7 +95,7 @@ The structure loosely follows the ![cookiecutter-data-science](http://drivendata
 - x86_64
 - Recommend having approximately X GB storage space for each model
 
-## Developer - 3 Step Install
+## Developer - 2 Step Install
 
 For developers - installation should be straight forward and only take a number of minutes on most systems.
 
