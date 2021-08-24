@@ -47,6 +47,9 @@ devrun: venv/py3/bin/activate
 	cd speechloop && ../venv/py3/bin/python3 main.py --input_csv="./data/simple_test/simple_test.csv"
 
 
+upload-pypi: wheel
+	twine upload dist/*
+
 #################################################################################
 # PROJECT RULES                                                                 #
 #################################################################################

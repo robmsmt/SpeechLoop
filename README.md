@@ -41,7 +41,7 @@ pip install speechloop
 speechloop
 ```
 
-Want to use a specific ASR?
+Want to use a specific ASR in your own script? No problem
 ```python
 from speechloop.asr import Vosk
 
