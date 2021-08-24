@@ -35,6 +35,7 @@ wheel: clean-wheelbuild
 ## Install local for development
 install-local-dev:
 	pip install -e .
+	pre-commit install
 
 
 venv/py3/bin/activate: requirements.txt
