@@ -11,17 +11,32 @@ from os import environ
 import docker
 import requests
 import websockets
-from google.cloud import speech_v1 as speech
+
+try:
+    from amazon_transcribe.client import TranscribeStreamingClient
+    from amazon_transcribe.handlers import TranscriptResultStreamHandler
+    from amazon_transcribe.model import TranscriptEvent
+except ImportError as e:
+    print(f"Amazon not imported, for reason:{e}")
+
+try:
+    from google.cloud import speech_v1 as speech
+except ImportError as e:
+    print(f"Google not imported, for reason:{e}")
 
 from speechloop.file_utils import valid_readable_file, disk_in_memory
 
 try:
     DOCKER_CLIENT = docker.from_env()
 except Exception as e:
-    warnings.warn("Either docker is not installed OR the docker client cannot be connected to. This might be ok if not using a local ASR (just APIs) \n")
+    warnings.warn("Either docker is not installed OR the docker client cannot be connected to. " "This might be ok if using just APIs")
 
 
 class AsrNotRecognized(Exception):
+    pass
+
+
+class InvalidConfigPath(Exception):
     pass
 
 
@@ -78,7 +93,7 @@ class Coqui(ASR):
         self.dockerhub_url = "robmsmt/sl-coqui-en-16k:latest"
         self.shortname = self.dockerhub_url.rsplit("/")[-1].rsplit(":")[0]
         self.longname = "coqui"
-        launch_container(self.dockerhub_url, {"3200/tcp": 3200}, verbose=self.verbose)
+        launch_container(self.dockerhub_url, {"3200/tcp": 3200}, verbose=self.verbose, delay=3)
         self.finish_init()
 
     def execute_with_audio(self, audio):
@@ -106,7 +121,7 @@ class Sphinx(ASR):
         self.dockerhub_url = "robmsmt/sl-sphinx-en-16k:latest"
         self.shortname = self.dockerhub_url.rsplit("/")[-1].rsplit(":")[0]
         self.longname = "sphinx"
-        launch_container(self.dockerhub_url, {"3000/tcp": 3000}, verbose=self.verbose)
+        launch_container(self.dockerhub_url, {"3000/tcp": 3000}, verbose=self.verbose, delay=2)
         self.finish_init()
 
     def execute_with_audio(self, audio):
@@ -136,7 +151,7 @@ class Vosk(ASR):
         self.shortname = self.dockerhub_url.rsplit("/")[-1].rsplit(":")[0]
         self.longname = "vosk"
         self.container_found = False
-        launch_container(self.dockerhub_url, {"2700/tcp": 2800}, verbose=self.verbose)
+        launch_container(self.dockerhub_url, {"2700/tcp": 2800}, verbose=self.verbose, delay=4)
         self.finish_init()
 
     def execute_with_audio(self, audio):
@@ -174,10 +189,71 @@ class Vosk(ASR):
                 return final_result
 
 
+class Aws(ASR):
+    def __init__(self, apikey=None):
+
+        super().__init__("aw", "cloud-api")
+
+        self.longname = "aws"
+        self.shortname = "aw"
+        self.handler = None
+        self.stream = None
+        self.client = None
+
+        if self.verbose:
+            print(f"Using {self.longname}")
+
+    def execute_with_audio(self, audio):
+        audio_file = disk_in_memory(audio)
+        return asyncio.get_event_loop().run_until_complete(self.write_chunks(audio_file))
+
+    async def write_chunks(self, audio_file):
+
+        self.client = TranscribeStreamingClient(region="us-east-1")
+        self.stream = await self.client.start_stream_transcription(
+            language_code="en-US",
+            media_sample_rate_hz=16000,
+            media_encoding="pcm",
+        )
+
+        while True:
+            data = audio_file.read(1024 * 16)
+            if len(data) == 0:
+                await self.stream.input_stream.end_stream()
+                break
+            await self.stream.input_stream.send_audio_event(audio_chunk=data)
+
+        async for event in self.stream.output_stream:
+            if isinstance(event, TranscriptEvent):
+                result = await self.handle_transcript_event(event)
+            else:
+                print(event)
+
+        # todo this is not a very good implementation but quick first attempt
+        while True:
+            # wait until generator has been iterated over
+            await asyncio.sleep(0.1)
+            if result[-1].is_partial == False:
+                break
+
+        # await asyncio.sleep(0.1)
+        transcript = result[-1].alternatives[-1].transcript
+
+        if transcript.endswith("."):
+            # aws ends always with a period, let's kill it.
+            transcript = transcript[:-1]
+
+        return transcript
+
+    async def handle_transcript_event(self, transcript_event: TranscriptEvent):
+        # This handler can be implemented to handle transcriptions as needed.
+        # Here's an example to get started.
+        results = transcript_event.transcript.results
+        return results
+
+
 class Google(ASR):
     def __init__(self, apikey=None):
-        class InvalidGoogleConfigPath(Exception):
-            pass
 
         super().__init__("gg", "cloud-api")
         # Check GOOGLE_APPLICATION_CREDENTIALS
@@ -192,7 +268,7 @@ class Google(ASR):
                     "INVALID CONFIG/PATH, please update env variable to where your GoogleCloud speech conf exists: \n "
                     "export GOOGLE_APPLICATION_CREDENTIALS=path/to/google.json \n"
                 )
-                raise InvalidGoogleConfigPath
+                raise InvalidConfigPath
 
         self.client = speech.SpeechClient()
         self.longname = "google"
@@ -233,7 +309,7 @@ def kill_container(dockerhub_url, verbose=True):
             container.stop()
 
 
-def launch_container(dockerhub_url, ports_dict, verbose=True):
+def launch_container(dockerhub_url, ports_dict, verbose=True, delay=5):
     container_running = False
     for container in DOCKER_CLIENT.containers.list():
         if len(container.image.tags) > 0 and container.image.tags[-1] == dockerhub_url:
@@ -252,7 +328,7 @@ def launch_container(dockerhub_url, ports_dict, verbose=True):
         )
         if verbose:
             print(f"{dockerhub_url} Downloaded. Starting container...")
-        time.sleep(5)
+        time.sleep(delay)
 
 
 def create_model_objects(wanted_asr: list) -> list:
@@ -270,6 +346,8 @@ def create_model_objects(wanted_asr: list) -> list:
             list_of_asr.append(Coqui())
         elif asr == "gg":
             list_of_asr.append(Google())
+        elif asr == "aw":
+            list_of_asr.append(Aws())
         else:
             raise AsrNotRecognized("ASR not recognised")
 

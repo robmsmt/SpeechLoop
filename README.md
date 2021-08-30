@@ -60,7 +60,7 @@ print(f"{vs.longname} -> {vs.execute_with_audio(raw_audio_file)}")
 | ✅ cq       | Coqui         | Open Source | Offline - docker |
 | ✅ gg       | Google        | Proprietary | API              |
 | ❌ tbc      | Microsoft     | Proprietary | API              |
-| ❌ tbc      | Amazon        | Proprietary | API              |
+| ✅ aw       | Amazon        | Proprietary | API              |
 
 ** In general, if there's a simple python API (that requires no extra compilation steps or heavy libs) then it'll be included as-is otherwise we build a docker container
 
