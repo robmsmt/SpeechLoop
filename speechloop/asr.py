@@ -337,7 +337,7 @@ def create_model_objects(wanted_asr: list) -> list:
     print(wanted_asr)
     for asr in wanted_asr:
         if asr == "all":
-            list_of_asr = [Vosk(), Sphinx(), Coqui(), Google()]
+            list_of_asr = [Vosk(), Sphinx(), Coqui(), Google(), Aws()]
         elif asr == "vs":
             list_of_asr.append(Vosk())
         elif asr == "sp":
