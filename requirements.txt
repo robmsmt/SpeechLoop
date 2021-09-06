@@ -1,3 +1,4 @@
+amazon-transcribe==0.5.0
 commoncorrections==1.0.5
 docker==5.0.0
 google-cloud-speech==2.5.0
