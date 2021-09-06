@@ -151,7 +151,7 @@ class Vosk(ASR):
         self.shortname = self.dockerhub_url.rsplit("/")[-1].rsplit(":")[0]
         self.longname = "vosk"
         self.container_found = False
-        launch_container(self.dockerhub_url, {"2700/tcp": 2800}, verbose=self.verbose, delay=4)
+        launch_container(self.dockerhub_url, {"2700/tcp": 2800}, verbose=self.verbose, delay=5)
         self.finish_init()
 
     def execute_with_audio(self, audio):
