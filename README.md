@@ -52,15 +52,18 @@ print(f"{vs.longname} -> {vs.execute_with_audio(raw_audio_file)}")
 ```
 
 ### ASRs
+Using `all` as wanted_asr parameter to main.py will attempt to start all ASRs for testing.
 
-| Short Code |    Model      |   Licence   |       Type       |
-|------------|---------------|-------------|------------------|
-| ✅ sp       | CMU Sphinx    | Open Source | Offline - docker |
-| ✅ vs       | Alphacep Vosk | Open Source | Offline - docker |
-| ✅ cq       | Coqui         | Open Source | Offline - docker |
-| ✅ gg       | Google        | Proprietary | API              |
-| ❌ tbc      | Microsoft     | Proprietary | API              |
-| ✅ aw       | Amazon        | Proprietary | API              |
+| Short Code |    Model        |   Licence   |       Type                                                              |
+|------------|-----------------|-------------|-------------------------------------------------------------------------|
+| ✅ sp       | CMU Sphinx      | Open Source | Offline - docker                                                        |
+| ✅ vs       | Alphacep Vosk   | Open Source | Offline - docker                                                        |
+| ✅ cq       | Coqui           | Open Source | Offline - docker                                                        |
+| ❌ sb       | Speech Brain    | Open Source | Offline - docker                                                        |
+| ❌ nm       | Nvidia NeMo     | Open Source | Offline - docker                                                        |
+| ✅ gg       | Google          | Proprietary | API set env:`GOOGLE_APPLICATION_CREDENTIALS`                            |
+| ✅ az       | Microsoft Azure | Proprietary | API set env:`AZURE_KEY`                                                 |
+| ✅ aw       | Amazon          | Proprietary | API set env:`AWS_ACCESS_KEY_ID`<br>+`AWS_SECRET_ACCESS_KEY` or aws configure|
 
 ** In general, if there's a simple python API (that requires no extra compilation steps or heavy libs) then it'll be included as-is otherwise we build a docker container
 
