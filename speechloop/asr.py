@@ -10,7 +10,6 @@ from os import environ
 from time import monotonic
 from urllib.parse import urlencode
 
-import docker
 import requests
 import websockets
 
@@ -26,14 +25,11 @@ try:
 except ImportError as e:
     print(f"Google not imported, for reason:{e}")
 
-try:
-    import azure.cognitiveservices.speech as speechsdk
-except ImportError as e:
-    print(f"Azure not imported, for reason:{e}")
 
 from speechloop.file_utils import valid_readable_file, disk_in_memory
 
 try:
+    import docker
     DOCKER_CLIENT = docker.from_env()
 except Exception as e:
     warnings.warn("Either docker is not installed OR the docker client cannot be connected to. " "This might be ok if using just APIs")
@@ -194,7 +190,7 @@ class Vosk(ASR):
                 return all_finals
             elif len(all_finals) > 0 and len(final_result) > 0:
                 return all_finals + f" {final_result}"
-            elif len(final_result) == 0:
+            elif len(final_result) == 0 and len(all_partials) > 0:
                 return all_partials[-1]
             else:
                 return final_result
