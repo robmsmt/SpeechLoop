@@ -13,7 +13,7 @@ def read_file(fname):
 # python3 -m pip install --upgrade setuptools wheel
 setup(
     name="speechloop",
-    version="0.0.2",
+    version="0.0.3",
     author="robmsmt",
     author_email="robmsmt@gmail.com",
     description='A "keep it simple" collection of many speech recognition engines... Designed to help answer - what is the best ASR?',
@@ -53,12 +53,12 @@ setup(
 
 
 # FIRST TIME SETUP
-#sudo apt install twine -y
-#python3 -m pip install --upgrade setuptools wheel
-#python3 setup.py sdist bdist_wheel
-#twine upload dist/*
+# sudo apt install twine -y
+# python3 -m pip install --upgrade setuptools wheel
+# python3 setup.py sdist bdist_wheel
+# twine upload dist/*
 
 # ONE LINER
-#rm -rf build/ dist/ speechloop.egg-info/ ; python3 setup.py sdist bdist_wheel && twine upload dist/*
+# rm -rf build/ dist/ speechloop.egg-info/ ; python3 setup.py sdist bdist_wheel && twine upload dist/*
 
 ### note you cannot (easily) reuse the same version number when it's uploaded to pypi

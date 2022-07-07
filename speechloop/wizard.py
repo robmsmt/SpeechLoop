@@ -7,7 +7,7 @@ import pandas as pd
 import questionary
 from questionary import Separator
 from speechloop.live import live_main
-from speechloop.file_utils import valid_readable_file, directory_writeable
+from speechloop.file_utils import valid_readable_file, directory_writeable, search_directory_for_audiofiles
 
 HOME = str(Path.home())
 

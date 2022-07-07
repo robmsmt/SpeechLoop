@@ -45,8 +45,9 @@ speechloop
 ```
 
 Want to use a specific ASR in your own script? No problem
+
 ```python
-from speechloop.asr import Vosk
+from speechloop.asr.vosk import Vosk
 
 raw_audio_file = open("path/to/your/mono_16k.wav", "rb").read()
 

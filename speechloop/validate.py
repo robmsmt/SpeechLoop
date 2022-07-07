@@ -1,9 +1,10 @@
+from speechloop.file_utils import valid_readable_file
+
 import re
 import wave
+from typing import List
 
 import pandas as pd
-
-from speechloop.file_utils import valid_readable_file
 
 
 def is_en_ascii(input_str: str) -> bool:
@@ -37,9 +38,11 @@ def passes_regex(text: str) -> bool:
         return False
 
 
-def validate_manditory_data(df: pd.DataFrame, sr: int, column_audiofile: str = 'filename'):
+def validate_manditory_data(df: pd.DataFrame, wanted_asr: List[str], sr: int, column_audiofile: str = 'filename'):
     print(f"Validating dataset CSV contains: {df.shape[0]} rows of files")
 
+    # 0. check that at least 1 ASR is in wanted_asr
+    assert len(wanted_asr) >= 1
     # 1. check that required columns exist: filename
     assert column_audiofile in df.columns
     # 2. check that >=1 row of data
@@ -52,7 +55,12 @@ def validate_manditory_data(df: pd.DataFrame, sr: int, column_audiofile: str = '
 
     print("All manditory validation tests passed. Data looks ok.")
 
-def validate_optional_csv_data(df: pd.DataFrame, enable_wer: bool = False, column_transcript:str = 'transcript'):
+
+def validate_optional_csv_data(df: pd.DataFrame, enable_wer: bool, column_transcript: str,
+                               enable_text_normalization: bool):
+    '''
+    Here we can check that all config options are compatible
+    '''
 
     if enable_wer:
         # dw1. check that required columns exist transcript
@@ -61,6 +69,10 @@ def validate_optional_csv_data(df: pd.DataFrame, enable_wer: bool = False, colum
         assert all(df[column_transcript].apply(valid_text).tolist())
         # dw3. check that transcripts contain only allowed regex]
         assert all(df[column_transcript].apply(passes_regex).tolist())
+
+    if enable_text_normalization:
+        # should check that if text normalization is enabled the we must have transcript field
+        assert column_transcript in df.columns
 
     print("Any optional validation tests passed. Data looks ok.")
 

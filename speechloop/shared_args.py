@@ -24,9 +24,34 @@ def _add_all_arguments(parser):
         help="if true (False default) is better for use with shellscripts. Turns off TQDM progress bar which is bad for log files",
     )
     parser.add_argument(
-        "--disable_wer",
+        "--enable_wer",
+        type=strtobool,
+        default=True,
+        help="if False (True default) will disable all WER calculation and checks",
+    )
+    parser.add_argument(
+        "--enable_text_normalization",
+        type=strtobool,
+        default=True,
+        help="if False (True default) will disable all text normalization on all ASR output, e.g. this maps '1' -> 'one' ",
+    )
+    parser.add_argument(
+        "--enable_compute_hashes",
         type=strtobool,
         default=False,
-        help="if true (False default) will disable all WER calculation and checks",
+        help="if True (False default) will add a hash column for audio + ground_truth, used for ensuring result is from same dataset by taking hash of sorted hashes ",
     )
+    parser.add_argument(
+        "--column_audiofile",
+        type=str,
+        default="filename",
+        help="header in CSV which points to the audio file"
+    )
+    parser.add_argument(
+        "--column_transcript",
+        type=str,
+        default="transcript",
+        help="header in CSV which points to the ground_truth"
+    )
+
     return parser

@@ -1,4 +1,4 @@
-import argparse, sys
+import argparse
 from speechloop.core import benchmark
 from speechloop.shared_args import _add_all_arguments
 
@@ -22,5 +22,9 @@ def run_arguments(args=None):
         parsed_args.wav_delay,
         parsed_args.quick_test,
         parsed_args.home_dir,
-        parsed_args.disable_wer,
+        parsed_args.enable_wer,
+        parsed_args.enable_text_normalization,
+        parsed_args.enable_compute_hashes,
+        parsed_args.column_audiofile,
+        parsed_args.column_transcript,
     )

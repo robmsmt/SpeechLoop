@@ -15,19 +15,10 @@ def disk_in_memory(wav_bytes: bytes) -> BytesIO:
         return BytesIO(spooled_wav.read())
 
 
-def import_csvs(filepaths: str, enable_wer: bool = False,
-        column_audiofile:str = 'filename',
-        column_transcript:str = 'transcript') -> pd.DataFrame:
-
-    if not enable_wer:
-        cols = [column_audiofile]
-    else:
-        cols = [column_audiofile, column_transcript]
-
-    df = pd.DataFrame(columns=cols)
+def import_csvs(filepaths: str) -> pd.DataFrame:
+    df = pd.DataFrame()
     for csv in filepaths.split(","):
         df_new = pd.read_csv(csv, index_col=None)
-        df_new = df_new[cols]
         df = pd.concat([df, df_new], sort=False)
     return df
 
@@ -53,7 +44,8 @@ def dir_path(path):
 
 
 def wavs_paths(list_path_to_wav):
-    if all([valid_readable_file(wav) for wav in list_path_to_wav]) and all([x.endswith(".wav") for x in list_path_to_wav]):
+    if all([valid_readable_file(wav) for wav in list_path_to_wav]) and all(
+            [x.endswith(".wav") for x in list_path_to_wav]):
         return list_path_to_wav
     else:
         raise argparse.ArgumentTypeError(f"readable_dir:{list_path_to_wav} is not a valid path")
@@ -63,6 +55,7 @@ def search_directory_for_audiofiles(d=".", file_type=".wav"):
     all_files = [os.path.join(path, f) for path, directories, files in os.walk(d) for f in files]
     all_valid_files = [os.path.abspath(f) for f in all_files if f.endswith(file_type)]
     return all_valid_files
+
 
 def flush_buffers() -> None:
     sys.stdout.flush()
