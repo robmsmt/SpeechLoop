@@ -37,28 +37,32 @@ def passes_regex(text: str) -> bool:
         return False
 
 
-def validate_data(df: pd.DataFrame, sr: int, disable_wer: bool = False):
+def validate_manditory_data(df: pd.DataFrame, sr: int, column_audiofile: str = 'filename'):
     print(f"Validating dataset CSV contains: {df.shape[0]} rows of files")
 
     # 1. check that required columns exist: filename
-    assert "filename" in df.columns
+    assert column_audiofile in df.columns
     # 2. check that >=1 row of data
     assert df.shape[0] >= 1
     # 3. check that all files are valid readable files that exist
-    assert all(df["filename"].apply(valid_readable_file).tolist())
+    assert all(df[column_audiofile].apply(valid_readable_file).tolist())
     # 4. pass through data and check that SampleRate is all same value as set in args
     if sr != -1:
-        assert all(df["filename"].apply(lambda f: validate_audio(f, sr)).tolist())
+        assert all(df[column_audiofile].apply(lambda f: validate_audio(f, sr)).tolist())
 
-    if not disable_wer:
+    print("All manditory validation tests passed. Data looks ok.")
+
+def validate_optional_csv_data(df: pd.DataFrame, enable_wer: bool = False, column_transcript:str = 'transcript'):
+
+    if enable_wer:
         # dw1. check that required columns exist transcript
-        assert "transcript" in df.columns
+        assert column_transcript in df.columns
         # dw2. check that len of all transcripts > 0 and is ascii
-        assert all(df["transcript"].apply(valid_text).tolist())
+        assert all(df[column_transcript].apply(valid_text).tolist())
         # dw3. check that transcripts contain only allowed regex]
-        assert all(df["transcript"].apply(passes_regex).tolist())
+        assert all(df[column_transcript].apply(passes_regex).tolist())
 
-    print("All validation tests passed. Data looks ok.")
+    print("Any optional validation tests passed. Data looks ok.")
 
 
 def validate_audio(filename: str, sr: int, verbose=True) -> bool:

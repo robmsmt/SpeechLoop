@@ -15,12 +15,14 @@ def disk_in_memory(wav_bytes: bytes) -> BytesIO:
         return BytesIO(spooled_wav.read())
 
 
-def import_csvs(filepaths: str, disable_wer: bool = False) -> pd.DataFrame:
+def import_csvs(filepaths: str, enable_wer: bool = False,
+        column_audiofile:str = 'filename',
+        column_transcript:str = 'transcript') -> pd.DataFrame:
 
-    if disable_wer:
-        cols = ["filename"]
+    if not enable_wer:
+        cols = [column_audiofile]
     else:
-        cols = ["filename", "transcript"]
+        cols = [column_audiofile, column_transcript]
 
     df = pd.DataFrame(columns=cols)
     for csv in filepaths.split(","):
