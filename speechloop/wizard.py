@@ -122,6 +122,9 @@ def wizard_main():
             Separator("---Cloud ASRs---"),
             "gg - Google Cloud - (requires api key)",  # todo maybe ask for this or grey it out if not provided?
         ],
+        validate=lambda a: (
+            True if len(a) > 0 else "You must select at least one ASR"
+        ),
     ).ask()
 
     asr_codes = [asr[:2] for asr in q2]

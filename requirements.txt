@@ -1,6 +1,6 @@
 simplepythonwer==1.0.3
 pandas==1.4.3
-commoncorrections==1.0.11
+commoncorrections==1.0.12
 amazon-transcribe==0.6.0
 docker==5.0.3
 google-cloud-speech==2.14.1
