@@ -41,17 +41,7 @@ def _add_all_arguments(parser):
         default=False,
         help="if True (False default) will add a hash column for audio + ground_truth, used for ensuring result is from same dataset by taking hash of sorted hashes ",
     )
-    parser.add_argument(
-        "--column_audiofile",
-        type=str,
-        default="filename",
-        help="header in CSV which points to the audio file"
-    )
-    parser.add_argument(
-        "--column_transcript",
-        type=str,
-        default="transcript",
-        help="header in CSV which points to the ground_truth"
-    )
+    parser.add_argument("--column_audiofile", type=str, default="filename", help="header in CSV which points to the audio file")
+    parser.add_argument("--column_transcript", type=str, default="transcript", help="header in CSV which points to the ground_truth")
 
     return parser

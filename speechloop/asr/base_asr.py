@@ -49,4 +49,3 @@ class ASR(metaclass=abc.ABCMeta):
         if valid_readable_file(path_to_audio):
             audio = open(path_to_audio, "rb").read()
             return self.execute_with_audio(audio)
-

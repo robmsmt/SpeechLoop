@@ -24,20 +24,19 @@ from commoncorrections import CommonCorrections
 
 
 def benchmark(
-        wanted_asr: List[str],
-        input_csvs_str: str,
-        sample_rate: int = 16000,
-        shell_script_mode: bool = False,
-        wav_delay: float = 0.0,
-        quick_test: bool = False,
-        home_dir: str = os.getcwd(),
-        enable_wer: bool = True,
-        enable_text_normalization: bool = True,
-        enable_compute_hashes: bool = False,
-        column_audiofile: str = 'filename',
-        column_transcript: str = 'transcript',
-        normalization_suffix: str = '_cor',
-
+    wanted_asr: List[str],
+    input_csvs_str: str,
+    sample_rate: int = 16000,
+    shell_script_mode: bool = False,
+    wav_delay: float = 0.0,
+    quick_test: bool = False,
+    home_dir: str = os.getcwd(),
+    enable_wer: bool = True,
+    enable_text_normalization: bool = True,
+    enable_compute_hashes: bool = False,
+    column_audiofile: str = "filename",
+    column_transcript: str = "transcript",
+    normalization_suffix: str = "_cor",
 ) -> None:
     """
 
@@ -75,7 +74,8 @@ def benchmark(
     list_of_asr_names = [asr.name for asr in list_of_asr]
 
     # RUN & GET TRANSCRIPTIONS
-    if not shell_script_mode: tqdm.pandas()
+    if not shell_script_mode:
+        tqdm.pandas()
     df_trans = add_transcriptions(df, list_of_asr, shell_script_mode, wav_delay)
 
     if enable_text_normalization:
@@ -84,7 +84,7 @@ def benchmark(
 
     if enable_wer:
         # ADD WER
-        wer_substring = f'{normalization_suffix}_wer' if enable_text_normalization else '_wer'
+        wer_substring = f"{normalization_suffix}_wer" if enable_text_normalization else "_wer"
         trans_substring = column_transcript + normalization_suffix if enable_text_normalization else column_transcript
         wer_cols = [asr + wer_substring for asr in list_of_asr_names]
         df_wer = add_wer(df_trans, wer_cols, trans_substring)

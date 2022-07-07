@@ -4,6 +4,7 @@ import warnings
 
 try:
     import docker
+
     DOCKER_CLIENT = docker.from_env()
 except Exception as e:
     warnings.warn("Either docker is not installed OR the docker client cannot be connected to. " "This might be ok if using just APIs")
@@ -37,4 +38,3 @@ def kill_container(dockerhub_url, verbose=True):
             if verbose:
                 print(f"Docker container: {dockerhub_url} found. Killing...")
             container.stop()
-

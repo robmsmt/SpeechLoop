@@ -78,4 +78,3 @@ class Azure(ASR):
         res = result["DisplayText"].strip()
         final_result = res[:-1] if res.endswith(".") else res
         return final_result
-

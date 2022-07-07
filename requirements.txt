@@ -1,10 +1,10 @@
-simplepythonwer==1.0.3
-pandas==1.4.3
-commoncorrections==1.0.12
 amazon-transcribe==0.6.0
+commoncorrections==1.0.12
 docker==5.0.3
 google-cloud-speech==2.14.1
+pandas==1.4.3
 questionary==1.10.0
+simplepythonwer==1.0.3
 sounddevice==0.4.4
 soundfile==0.10.3.post1
 tqdm==4.64.0

@@ -21,4 +21,4 @@ def print_wer_summary(list_of_asr, df_wer, start_time):
         print(f"For a dataset of {df_wer.shape[0]} wav files")
         print(f"With an average of {((end_time - start_time).total_seconds() / df_wer.shape[0] ):.2f} secs per wav file")
     except Exception as e:
-        print(f"Error printing summary: {e}" )
+        print(f"Error printing summary: {e}")

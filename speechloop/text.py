@@ -12,7 +12,7 @@ def add_wer(df_trans: pd.DataFrame, wer_cols: List[str], column_transcript: str)
 
 
 def wer_df(row, asr, column_transcript):
-    '''
+    """
 
     Parameters
     ----------
@@ -23,7 +23,7 @@ def wer_df(row, asr, column_transcript):
     Returns, value between 0 <--> 1.0
     -------
 
-    '''
+    """
     asr_result = str(row[asr[:-4]]).lower()
     ground_truth = str(row[column_transcript]).lower()
 

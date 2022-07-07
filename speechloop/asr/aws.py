@@ -73,5 +73,3 @@ class Aws(ASR):
         # Here's an example to get started.
         results = transcript_event.transcript.results
         return results
-
-

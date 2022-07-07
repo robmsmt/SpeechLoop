@@ -38,7 +38,7 @@ def passes_regex(text: str) -> bool:
         return False
 
 
-def validate_manditory_data(df: pd.DataFrame, wanted_asr: List[str], sr: int, column_audiofile: str = 'filename'):
+def validate_manditory_data(df: pd.DataFrame, wanted_asr: List[str], sr: int, column_audiofile: str = "filename"):
     print(f"Validating dataset CSV contains: {df.shape[0]} rows of files")
 
     # 0. check that at least 1 ASR is in wanted_asr
@@ -56,11 +56,10 @@ def validate_manditory_data(df: pd.DataFrame, wanted_asr: List[str], sr: int, co
     print("All manditory validation tests passed. Data looks ok.")
 
 
-def validate_optional_csv_data(df: pd.DataFrame, enable_wer: bool, column_transcript: str,
-                               enable_text_normalization: bool):
-    '''
+def validate_optional_csv_data(df: pd.DataFrame, enable_wer: bool, column_transcript: str, enable_text_normalization: bool):
+    """
     Here we can check that all config options are compatible
-    '''
+    """
 
     if enable_wer:
         # dw1. check that required columns exist transcript

@@ -34,4 +34,3 @@ class Sphinx(ASR):
                 return self.return_error()
         else:
             return self.return_error()
-

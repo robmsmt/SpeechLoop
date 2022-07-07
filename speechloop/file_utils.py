@@ -44,8 +44,7 @@ def dir_path(path):
 
 
 def wavs_paths(list_path_to_wav):
-    if all([valid_readable_file(wav) for wav in list_path_to_wav]) and all(
-            [x.endswith(".wav") for x in list_path_to_wav]):
+    if all([valid_readable_file(wav) for wav in list_path_to_wav]) and all([x.endswith(".wav") for x in list_path_to_wav]):
         return list_path_to_wav
     else:
         raise argparse.ArgumentTypeError(f"readable_dir:{list_path_to_wav} is not a valid path")
