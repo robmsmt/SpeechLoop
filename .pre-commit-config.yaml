@@ -23,20 +23,20 @@ repos:
     -   id: check-ast
     -   id: requirements-txt-fixer
     -   id: debug-statements
--   repo: local
-    hooks:
-    -   id: unittest
-        name: unittest
-        entry: python -m unittest discover .
-        language: system # changing this to python breaks things as per: https://stackoverflow.com/questions/59714740/pre-commit-run-unittest-git-hooks-modulenotfounderror-for-installed-python-modu
-        'types': [ python ]
-        args: [ "-p '*test.py'" ] # Probably this option is absolutely not needed.
-        pass_filenames: false
-        stages: [ commit ]
--   repo: https://github.com/psf/black
-    rev: 21.7b0
-    hooks:
-    -   id: black
+#-   repo: local
+#    hooks:
+#    -   id: unittest
+#        name: unittest
+#        entry: python -m unittest discover .
+#        language: system # changing this to python breaks things as per: https://stackoverflow.com/questions/59714740/pre-commit-run-unittest-git-hooks-modulenotfounderror-for-installed-python-modu
+#        'types': [ python ]
+#        args: [ "-p '*test.py'" ] # Probably this option is absolutely not needed.
+#        pass_filenames: false
+#        stages: [ commit ]
+#-   repo: https://github.com/psf/black
+#    rev: 21.7b0
+#    hooks:
+#    -   id: black
 -   repo: https://github.com/regebro/pyroma
     rev: "3.2"
     hooks:

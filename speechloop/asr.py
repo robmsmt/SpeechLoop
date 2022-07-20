@@ -121,6 +121,34 @@ class Coqui(ASR):
             return self.return_error()
 
 
+class Nemo(ASR):
+    """
+    Nemo
+    """
+
+    def __init__(self):
+        super().__init__("nm", "docker-local")
+        self.uri = "http://localhost:3500/transcribe"
+        self.dockerhub_url = "robmsmt/sl-nemo-en-16k:latest"
+        self.shortname = self.dockerhub_url.rsplit("/")[-1].rsplit(":")[0]
+        self.longname = "nemo"
+        launch_container(self.dockerhub_url, {"3500/tcp": 3500}, verbose=self.verbose, delay=30)
+        self.finish_init()
+
+    def execute_with_audio(self, audio):
+        b64 = base64.b64encode(audio).decode("utf-8")
+        json_message = {"b64_wav": b64, "sr": 16000}
+        r = requests.post(self.uri, json=json_message)
+        if r.status_code == 200:
+            try:
+                response = r.json()["transcript"]
+                return response
+            except KeyError:
+                return self.return_error()
+        else:
+            return self.return_error()
+
+
 class Sphinx(ASR):
     """
     Vosk
@@ -420,7 +448,7 @@ def create_model_objects(wanted_asr: list) -> list:
     print(wanted_asr)
     for asr in wanted_asr:
         if asr == "all":
-            list_of_asr = [Vosk(), Sphinx(), Coqui(), Google(), Aws(), Azure()]
+            list_of_asr = [Vosk(), Sphinx(), Coqui(), Google(), Aws(), Azure(), Nemo()]
         elif asr == "vs":
             list_of_asr.append(Vosk())
         elif asr == "sp":
@@ -433,6 +461,8 @@ def create_model_objects(wanted_asr: list) -> list:
             list_of_asr.append(Aws())
         elif asr == "az":
             list_of_asr.append(Azure())
+        elif asr == "nm":
+            list_of_asr.append(Nemo())
         else:
             raise AsrNotRecognized("ASR not recognised")
 
