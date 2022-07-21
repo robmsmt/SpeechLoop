@@ -5,6 +5,7 @@ from speechloop.asr.coqui import Coqui
 from speechloop.asr.google import Google
 from speechloop.asr.aws import Aws
 from speechloop.asr.azure import Azure
+from speechloop.asr.nemo import Nemo
 
 
 def create_model_objects(wanted_asr: list) -> list:
@@ -26,6 +27,8 @@ def create_model_objects(wanted_asr: list) -> list:
             list_of_asr.append(Aws())
         elif asr == "az":
             list_of_asr.append(Azure())
+        elif asr == "nm":
+            list_of_asr.append(Nemo())
         else:
             raise AsrNotRecognized("ASR not recognised")
 
