@@ -2,6 +2,7 @@
 """
 An example of reading from a microphone (blocking) and running all the results on given ASRs
 """
+from speechloop.asr.registry import create_model_objects
 
 import argparse
 import os
@@ -13,8 +14,6 @@ from subprocess import call
 
 import sounddevice as sd
 import soundfile as sf
-
-from speechloop.asr import create_model_objects
 
 Q = queue.Queue()
 RECORDING = None

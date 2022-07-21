@@ -1,4 +1,3 @@
-
 import os
 from fastapi import FastAPI
 from pydantic import BaseModel
@@ -6,12 +5,14 @@ import tempfile
 from io import BytesIO
 from base64 import b64decode
 import argparse
+
 # import soundfile
 # import numpy as np
 # import onnxruntime as rt
 # import nemo
 import nemo.collections.asr as nemo_asr
-model = os.environ['MODELNAME']
+
+model = os.environ["MODELNAME"]
 
 app = FastAPI()
 # nm = nemo_asr.models.EncDecCTCModel.from_pretrained(model_name="QuartzNet15x5Base-En")
@@ -27,6 +28,7 @@ nm = nemo_asr.models.EncDecRNNTBPEModel.restore_from(model)
 #
 # all_models = enc_dec_ctc_models + enc_dec_ctc_bpe_models + enc_dec_rnn_t_bpe_models + enc_dec_rnn_t_models
 # print(all_models)
+
 
 def disk_in_memory(wav_bytes):
     """
@@ -63,7 +65,7 @@ async def transcribe(audio: Audio):
         # pcm, sample_rate = soundfile.read(dm, dtype="int16")
         # todo cannot use disk memory since nemo lib needs file - in future replace with onnx: https://github.com/NVIDIA/NeMo/blob/main/tutorials/asr/ASR_with_NeMo.ipynb
 
-        with tempfile.NamedTemporaryFile(mode='wb', delete=True, suffix='.wav') as f:
+        with tempfile.NamedTemporaryFile(mode="wb", delete=True, suffix=".wav") as f:
             f.write(wav_bytes)
             files_list = [f.name]
             print(files_list)
@@ -76,5 +78,6 @@ async def transcribe(audio: Audio):
 
 if __name__ == "__main__":
     import uvicorn
+
     print("starting...")
     uvicorn.run("main:app", host="0.0.0.0", port=3600)

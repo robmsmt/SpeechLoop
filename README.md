@@ -9,6 +9,9 @@ ___
 
 A "keep it simple" collection of many speech recognition engines focusing on inference only. We take the best and most well-known models, pick sensible defaults (if they don't already exist) and make them really easy to evaluate & use.
 
+## Quick Links
+ - [Blogpost introduction](https://robmsmt.github.io/2021/08/14/introducing-speechloop/)
+ - [First Benchmark results on a dataset](https://robmsmt.github.io/2021/09/04/benchmarking-asr-first-test/)
 
 ## Overview
 
@@ -42,8 +45,9 @@ speechloop
 ```
 
 Want to use a specific ASR in your own script? No problem
+
 ```python
-from speechloop.asr import Vosk
+from speechloop.asr.vosk import Vosk
 
 raw_audio_file = open("path/to/your/mono_16k.wav", "rb").read()
 

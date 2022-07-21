@@ -7,7 +7,7 @@ import pandas as pd
 import questionary
 from questionary import Separator
 from speechloop.live import live_main
-from speechloop.file_utils import valid_readable_file, directory_writeable
+from speechloop.file_utils import valid_readable_file, directory_writeable, search_directory_for_audiofiles
 
 HOME = str(Path.home())
 
@@ -56,8 +56,7 @@ def select_home_directory(default_local, home_pointer_file):
     else:
         while True:
             q0_path = questionary.path(
-                "Enter your preferred path for SpeechLoop. Any folders that do not exist we will create them. "
-                "We append a folder called SpeechLoop: ", only_directories=True
+                "Enter your preferred path for SpeechLoop. Any folders that do not exist we will create them. " "We append a folder called SpeechLoop: ", only_directories=True
             ).ask()
             new_path = os.path.join(os.path.abspath(os.path.expanduser(q0_path)), "SpeechLoop")
             if questionary.confirm(new_path).ask():
@@ -122,6 +121,7 @@ def wizard_main():
             Separator("---Cloud ASRs---"),
             "gg - Google Cloud - (requires api key)",  # todo maybe ask for this or grey it out if not provided?
         ],
+        validate=lambda a: (True if len(a) > 0 else "You must select at least one ASR"),
     ).ask()
 
     asr_codes = [asr[:2] for asr in q2]

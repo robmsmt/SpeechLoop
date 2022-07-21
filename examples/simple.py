@@ -1,4 +1,7 @@
-from speechloop.asr import Vosk, Google, Sphinx, Coqui
+from speechloop.asr.vosk import Vosk
+from speechloop.asr.google import Google
+from speechloop.asr.sphinx import Sphinx
+from speechloop.asr.coqui import Coqui
 
 vs = Vosk()
 sp = Sphinx()

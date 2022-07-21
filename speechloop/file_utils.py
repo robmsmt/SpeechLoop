@@ -15,17 +15,10 @@ def disk_in_memory(wav_bytes: bytes) -> BytesIO:
         return BytesIO(spooled_wav.read())
 
 
-def import_csvs(filepaths: str, disable_wer: bool = False) -> pd.DataFrame:
-
-    if disable_wer:
-        cols = ["filename"]
-    else:
-        cols = ["filename", "transcript"]
-
-    df = pd.DataFrame(columns=cols)
+def import_csvs(filepaths: str) -> pd.DataFrame:
+    df = pd.DataFrame()
     for csv in filepaths.split(","):
         df_new = pd.read_csv(csv, index_col=None)
-        df_new = df_new[cols]
         df = pd.concat([df, df_new], sort=False)
     return df
 
@@ -61,6 +54,7 @@ def search_directory_for_audiofiles(d=".", file_type=".wav"):
     all_files = [os.path.join(path, f) for path, directories, files in os.walk(d) for f in files]
     all_valid_files = [os.path.abspath(f) for f in all_files if f.endswith(file_type)]
     return all_valid_files
+
 
 def flush_buffers() -> None:
     sys.stdout.flush()
