@@ -12,4 +12,5 @@
  - tbc
 
 ## Notes
-Conformer-CTC version
+- Contextnet 1024 version
+- Not used onnx yet
