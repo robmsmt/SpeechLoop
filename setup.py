@@ -13,7 +13,7 @@ def read_file(fname):
 # python3 -m pip install --upgrade setuptools wheel
 setup(
     name="speechloop",
-    version="0.0.3",
+    version="0.0.4",
     author="robmsmt",
     author_email="robmsmt@gmail.com",
     description='A "keep it simple" collection of many speech recognition engines... Designed to help answer - what is the best ASR?',
