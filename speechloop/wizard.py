@@ -120,6 +120,8 @@ def wizard_main():
             "cq - Coqui stt",
             Separator("---Cloud ASRs---"),
             "gg - Google Cloud - (requires api key)",  # todo maybe ask for this or grey it out if not provided?
+            "gg - Google Cloud - (requires api key)",  # todo maybe ask for this or grey it out if not provided?
+            "gg - Google Cloud - (requires api key)",  # todo maybe ask for this or grey it out if not provided?
         ],
         validate=lambda a: (True if len(a) > 0 else "You must select at least one ASR"),
     ).ask()
