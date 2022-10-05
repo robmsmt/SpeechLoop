@@ -14,7 +14,7 @@ class Coqui(ASR):
     def __init__(self):
         super().__init__("cq", "docker-local")
         self.uri = "http://localhost:3200/transcribe"
-        self.dockerhub_url = "robmsmt/sl-coqui-en-16k:latest"
+        self.dockerhub_url = "ghcr.io/robmsmt/speechloop/sl-coqui-en-16k:latest"
         self.shortname = self.dockerhub_url.rsplit("/")[-1].rsplit(":")[0]
         self.longname = "coqui"
         launch_container(self.dockerhub_url, {"3200/tcp": 3200}, verbose=self.verbose, delay=3)

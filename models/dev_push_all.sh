@@ -3,7 +3,7 @@
 
 for i in ./sl-* ; do
   if [ -d "$i" ]; then
-    cd "$i" && ./build.sh
+    cd "$i" && ./push.sh
     cd ..
   fi
 done

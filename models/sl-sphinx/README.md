@@ -2,7 +2,7 @@
 
 ## CONFIG
 - Shortcode: ` sp `
-- Docker: ` robmsmt/sl-sphinx-en-16k:latest `
+- Docker: ` ghcr.io/robmsmt/speechloop/sl-sphinx-en-16k:latest `
 - InternalPort: ` 3000 `
 - ExternalPort: ` 3000 `
 - SampleRate: ` 16000 `

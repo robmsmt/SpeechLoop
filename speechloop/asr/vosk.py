@@ -17,7 +17,7 @@ class Vosk(ASR):
     def __init__(self):
         super().__init__("vs", "docker-local")
         self.uri = "ws://localhost:2800"
-        self.dockerhub_url = "robmsmt/sl-vosk-en-16k:latest"
+        self.dockerhub_url = "ghcr.io/robmsmt/speechloop/sl-vosk-en-16k:latest"
         self.shortname = self.dockerhub_url.rsplit("/")[-1].rsplit(":")[0]
         self.longname = "vosk"
         self.container_found = False

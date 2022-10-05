@@ -15,7 +15,7 @@ class Sphinx(ASR):
     def __init__(self):
         super().__init__("sp", "docker-local")
         self.uri = "http://localhost:3000/transcribe"
-        self.dockerhub_url = "robmsmt/sl-sphinx-en-16k:latest"
+        self.dockerhub_url = "ghcr.io/robmsmt/speechloop/sl-sphinx-en-16k:latest"
         self.shortname = self.dockerhub_url.rsplit("/")[-1].rsplit(":")[0]
         self.longname = "sphinx"
         launch_container(self.dockerhub_url, {"3000/tcp": 3000}, verbose=self.verbose, delay=2)

@@ -2,7 +2,7 @@
 
 ## CONFIG
 - Shortcode: ` vs `
-- Docker: ` robmsmt/sl-vosk-en-16k:latest `
+- Docker: ` ghcr.io/robmsmt/speechloop/sl-vosk-en-16k:latest `
 - Website: http://alphacephei.com
 - Github: https://github.com/alphacep/vosk-api
 - Type: ` DNN-WFST - Kaldi based trained model with modifications `
