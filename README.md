@@ -63,8 +63,8 @@ Using `all` as wanted_asr parameter to main.py will attempt to start all ASRs fo
 | ✅ sp       | CMU Sphinx      | Open Source | Offline - docker                                                        |
 | ✅ vs       | Alphacep Vosk   | Open Source | Offline - docker                                                        |
 | ✅ cq       | Coqui           | Open Source | Offline - docker                                                        |
+| ✅ nm       | Nvidia NeMo     | Open Source | Offline - docker                                                        |
 | ❌ sb       | Speech Brain    | Open Source | Offline - docker                                                        |
-| ❌ nm       | Nvidia NeMo     | Open Source | Offline - docker                                                        |
 | ✅ gg       | Google          | Proprietary | API set env:`GOOGLE_APPLICATION_CREDENTIALS`                            |
 | ✅ az       | Microsoft Azure | Proprietary | API set env:`AZURE_KEY`                                                 |
 | ✅ aw       | Amazon          | Proprietary | API set env:`AWS_ACCESS_KEY_ID`<br>+`AWS_SECRET_ACCESS_KEY` or aws configure|
